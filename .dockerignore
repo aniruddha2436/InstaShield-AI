@@ -1,0 +1,11 @@
+**/node_modules
+**/.venv
+**/__pycache__
+**/.pytest_cache
+**/.git
+**/.env
+reference
+frontend/dist
+backend/tests
+backend/models/*.joblib
+InstaShield-AI

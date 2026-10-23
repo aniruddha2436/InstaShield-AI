@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: instashield-ai
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    envVars:
+      - key: OMP_NUM_THREADS
+        value: "1"
