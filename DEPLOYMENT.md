@@ -36,3 +36,7 @@ The existing frontend production build and nine model/API tests passed before th
 History is stored in browser localStorage and remains optional. Localhost history does not transfer to the hosted address or other browsers. The app does not persist a backend history database. Public hosting does not add Instagram access or identity verification.
 
 References: [Render Docker deployment](https://render.com/docs/docker), [Render Blueprints](https://render.com/docs/blueprint-spec).
+
+## Combined v4 + v5 candidate
+
+A candidate artifact is available separately. The Dockerfile still copies only the selected active model pair; it does not automatically deploy candidate_v4_v5 or rollback_v4. Follow UPDATE_V4_V5.md to review, select, test, push and verify the candidate, or restore the rollback model.

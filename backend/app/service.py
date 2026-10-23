@@ -1,5 +1,6 @@
 from pathlib import Path
 import math
+import hashlib
 import numpy as np
 import pandas as pd
 import json
@@ -7,13 +8,21 @@ import xgboost as xgb
 from .features import RAW_COLS, FEATURES, make_features
 
 MODEL_PATH = Path(__file__).resolve().parents[1] / 'models' / 'fake_profile_model.json'
-RANGES = {'bio_length': (0,147), 'followers': (2,490299), 'following': (15,7500), 'posts': (1,5000), 'account_age_days': (10,5800), 'username_changed': (0,5)}
 
 class Detector:
     def __init__(self, path=MODEL_PATH):
-        # Portable native model recovered from the original trained trees.
+        # Load the selected native model and its paired metadata.
         path = Path(path)
         bundle = json.loads(path.with_suffix('.metadata.json').read_text(encoding='utf-8'))
+        self.training_ranges = bundle.get('training_ranges')
+        expected_ranges = set(RAW_COLS) - {'username'}
+        if not isinstance(self.training_ranges, dict) or set(self.training_ranges) != expected_ranges:
+            raise ValueError('Missing or unexpected model training ranges')
+        for name, bounds in self.training_ranges.items():
+            if not isinstance(bounds, list) or len(bounds) != 2 or any(isinstance(x, bool) or not isinstance(x, (int,float)) or not math.isfinite(x) for x in bounds) or bounds[0] < 0 or bounds[0] > bounds[1]:
+                raise ValueError('Invalid training range: ' + name)
+        if 'model_sha256' in bundle and hashlib.sha256(path.read_bytes()).hexdigest() != bundle['model_sha256']:
+            raise ValueError('Model checksum does not match metadata')
         self.model = xgb.XGBClassifier(n_jobs=1)
         self.model.load_model(path)
         self.threshold = float(bundle['threshold'])
@@ -41,7 +50,7 @@ class Detector:
              'direction': 'toward suspicious' if contrib[i] > 0 else 'toward genuine' if contrib[i] < 0 else 'neutral'}
             for i,name in enumerate(FEATURES)
         ], key=lambda r: abs(r['contribution']), reverse=True)[:5]
-        warnings = [f'{name.replace("_", " ")}: entered value is outside the dataset range {lo}–{hi}.' for name,(lo,hi) in RANGES.items() if not lo <= getattr(profile,name) <= hi]
+        warnings = [f'{name.replace("_", " ")}: entered value is outside the dataset range {lo}–{hi}.' for name,(lo,hi) in self.training_ranges.items() if not lo <= getattr(profile,name) <= hi]
         return {'username': profile.username, 'fake_probability': probability,
                 'threshold': self.threshold, 'is_suspicious': probability >= self.threshold,
                 'verdict': 'Potentially suspicious' if probability >= self.threshold else 'Lower model risk',

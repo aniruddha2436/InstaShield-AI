@@ -93,3 +93,7 @@ Paste the bio into the text area. An empty bio counts as zero. The frontend coun
 ## Hosting
 
 Render deployment files are included. See [DEPLOYMENT.md](DEPLOYMENT.md). In production the FastAPI service also serves the built React frontend at its root URL.
+
+## Combined v4 + v5 candidate
+
+A separate 10,000-row candidate has been trained with username-grouped evaluation. The default deployed artifact remains the preserved v4 model until explicitly selected. See [UPDATE_V4_V5.md](UPDATE_V4_V5.md) and [the evaluation report](reports/combined_v4_v5/EVALUATION.md). Range warnings now come from each model’s paired metadata; the v4 metadata retains its previous legacy bounds.

@@ -27,5 +27,37 @@
     "0": "genuine",
     "1": "fake"
   },
-  "source": "fake_profile_model.joblib; recovered embedded native model, no retraining"
+  "source": "fake_profile_model.joblib; recovered embedded native model, no retraining",
+  "model_version": "legacy-v4",
+  "training_ranges": {
+    "profile_picture": [
+      0,
+      1
+    ],
+    "bio_length": [
+      0,
+      147
+    ],
+    "followers": [
+      2,
+      490299
+    ],
+    "following": [
+      15,
+      7500
+    ],
+    "posts": [
+      1,
+      5000
+    ],
+    "account_age_days": [
+      10,
+      5800
+    ],
+    "username_changed": [
+      0,
+      5
+    ]
+  },
+  "range_source": "Legacy v4 full-dataset ranges, retained from the previous service; original training-partition ranges unavailable"
 }

@@ -14,8 +14,10 @@ class FeatureTests(unittest.TestCase):
         fn=next(n for n in tree.body if isinstance(n,ast.FunctionDef) and n.name=='make_features')
         scope={'FEATURES':FEATURES}
         exec(compile(ast.Module(body=[fn],type_ignores=[]),'notebook_features','exec'),scope)
-        raw=pd.read_csv(ROOT/'reference/instagram_fake_profile_v4.csv').drop(columns=['is_fake'])
-        pd.testing.assert_frame_equal(make_features(raw),scope['make_features'](raw))
+        for filename in ['instagram_fake_profile_v4.csv','instagram_fake_profile_v5.csv','instagram_fake_profile_v4_v5_combined.csv']:
+            with self.subTest(filename=filename):
+                raw=pd.read_csv(ROOT/'reference'/filename).drop(columns=['is_fake'])
+                pd.testing.assert_frame_equal(make_features(raw),scope['make_features'](raw))
     def test_zero_denominators_and_order(self):
         raw=pd.DataFrame([dict(profile_picture=0,bio_length=0,username='a12._3',followers=7,following=0,posts=2,account_age_days=0,username_changed=0)])
         result=make_features(raw)

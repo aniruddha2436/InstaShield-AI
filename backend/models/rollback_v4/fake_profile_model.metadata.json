@@ -1,0 +1,63 @@
+{
+  "threshold": 0.6835914254188538,
+  "features": [
+    "profile_picture",
+    "bio_length",
+    "followers",
+    "following",
+    "posts",
+    "account_age_days",
+    "username_changed",
+    "followers_following_ratio",
+    "followers_per_day",
+    "posts_per_day",
+    "username_digits"
+  ],
+  "raw_cols": [
+    "profile_picture",
+    "bio_length",
+    "username",
+    "followers",
+    "following",
+    "posts",
+    "account_age_days",
+    "username_changed"
+  ],
+  "labels": {
+    "0": "genuine",
+    "1": "fake"
+  },
+  "source": "fake_profile_model.joblib; recovered embedded native model, no retraining",
+  "model_version": "legacy-v4",
+  "training_ranges": {
+    "profile_picture": [
+      0,
+      1
+    ],
+    "bio_length": [
+      0,
+      147
+    ],
+    "followers": [
+      2,
+      490299
+    ],
+    "following": [
+      15,
+      7500
+    ],
+    "posts": [
+      1,
+      5000
+    ],
+    "account_age_days": [
+      10,
+      5800
+    ],
+    "username_changed": [
+      0,
+      5
+    ]
+  },
+  "range_source": "Legacy v4 full-dataset ranges, retained from the previous service; original training-partition ranges unavailable"
+}

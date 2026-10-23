@@ -1,0 +1,31 @@
+{
+  "threshold": 0.6835914254188538,
+  "features": [
+    "profile_picture",
+    "bio_length",
+    "followers",
+    "following",
+    "posts",
+    "account_age_days",
+    "username_changed",
+    "followers_following_ratio",
+    "followers_per_day",
+    "posts_per_day",
+    "username_digits"
+  ],
+  "raw_cols": [
+    "profile_picture",
+    "bio_length",
+    "username",
+    "followers",
+    "following",
+    "posts",
+    "account_age_days",
+    "username_changed"
+  ],
+  "labels": {
+    "0": "genuine",
+    "1": "fake"
+  },
+  "source": "fake_profile_model.joblib; recovered embedded native model, no retraining"
+}

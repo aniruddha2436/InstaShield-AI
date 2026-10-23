@@ -1,0 +1,4 @@
+
+# Preserve checksummed datasets and native model artifacts across Windows/Linux.
+*.csv -text
+backend/models/** -text

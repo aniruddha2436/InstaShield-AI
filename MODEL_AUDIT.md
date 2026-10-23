@@ -31,3 +31,7 @@ Numeric dataset ranges: profile_picture 0–1; bio_length 0–147; followers 2�
 ## Interpretation
 
 The model estimates association with the supplied fake-profile labels. It does not prove identity or fraud. Native TreeSHAP contributions explain this particular model's prediction in log-odds, not percentage points or causal evidence. Dataset provenance, representativeness and real-world calibration remain unestablished. No live Instagram access, scraping, image analysis or private-data access is implemented. Optional history stores summaries only in the browser.
+
+## Combined-data candidate (separate artifact)
+
+The preserved active model described above remains selected. A new candidate was trained on v4 and v5 with grouped, held-out evaluation. It uses independent training-only threshold and range metadata. See reports/combined_v4_v5/EVALUATION.md and UPDATE_V4_V5.md. The backend now loads range bounds from metadata; for the legacy model these are explicitly labeled as the previous full-v4 ranges.
