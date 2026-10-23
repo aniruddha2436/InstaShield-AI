@@ -1,5 +1,6 @@
 {
-  "threshold": 0.6835914254188538,
+  "model_version": "combined-v4-v5-seed42",
+  "threshold": 0.698607861995697,
   "features": [
     "profile_picture",
     "bio_length",
@@ -27,8 +28,6 @@
     "0": "genuine",
     "1": "fake"
   },
-  "source": "fake_profile_model.joblib; recovered embedded native model, no retraining",
-  "model_version": "legacy-v4",
   "training_ranges": {
     "profile_picture": [
       0,
@@ -44,20 +43,127 @@
     ],
     "following": [
       15,
-      7500
+      20000
     ],
     "posts": [
       1,
       5000
     ],
     "account_age_days": [
-      10,
+      8,
       5800
     ],
     "username_changed": [
       0,
-      5
+      6
     ]
   },
-  "range_source": "Legacy v4 full-dataset ranges, retained from the previous service; original training-partition ranges unavailable"
+  "range_source": "training partition only",
+  "dataset_checksums": {
+    "instagram_fake_profile_v4.csv": "c445ab45e30c93a9a739aeaa3b63a0d100c62219ea2a8720aa1a0597093c3252",
+    "instagram_fake_profile_v5.csv": "a517865f4e2808aef3849fdf621421f8d880a90d952a7056ad92c6ccbf1477e5",
+    "instagram_fake_profile_v4_v5_combined.csv": "35b9c01622c9fc4f53f5304a9976f1aaebb4b5272d1b88dbff3500acefa67dfd"
+  },
+  "model_sha256": "7e7e2bc168f5672c69965a5f7f7719ef6ce65b2f64dab820bf889a24d2ed6f64",
+  "rows": 10000,
+  "removed_duplicates": 0,
+  "class_counts": {
+    "genuine": 8501,
+    "fake": 1499
+  },
+  "split": {
+    "seed": 42,
+    "method": "first fold of five-fold StratifiedGroupKFold",
+    "group": "case-insensitive username",
+    "train_rows": 7999,
+    "test_rows": 2001,
+    "cv_folds": 5,
+    "username_overlap": 0,
+    "assignment_sha256": "a080135a6208b8c37530b70d781e3c15087cd978cfa810fe6a7988f25ba069c2"
+  },
+  "best_params": {
+    "subsample": 0.7,
+    "reg_lambda": 0.5,
+    "n_estimators": 150,
+    "min_child_weight": 5,
+    "max_depth": 3,
+    "learning_rate": 0.05,
+    "gamma": 0,
+    "colsample_bytree": 0.85
+  },
+  "best_cv_pr_auc": 0.692683281462489,
+  "threshold_selection": "maximum training-only grouped out-of-fold F1; test excluded",
+  "evaluation": {
+    "overall": {
+      "rows": 2001,
+      "genuine": 1701,
+      "fake": 300,
+      "precision": 0.7391304347826086,
+      "recall": 0.6233333333333333,
+      "f1": 0.6763110307414105,
+      "roc_auc": 0.8448167744464039,
+      "pr_auc": 0.7299987106914338,
+      "confusion_matrix": [
+        [
+          1635,
+          66
+        ],
+        [
+          113,
+          187
+        ]
+      ]
+    },
+    "by_source": {
+      "instagram_fake_profile_v4": {
+        "rows": 989,
+        "genuine": 870,
+        "fake": 119,
+        "precision": 0.603448275862069,
+        "recall": 0.5882352941176471,
+        "f1": 0.5957446808510638,
+        "roc_auc": 0.8325509514150488,
+        "pr_auc": 0.6383964704089231,
+        "confusion_matrix": [
+          [
+            824,
+            46
+          ],
+          [
+            49,
+            70
+          ]
+        ]
+      },
+      "instagram_fake_profile_v5": {
+        "rows": 1012,
+        "genuine": 831,
+        "fake": 181,
+        "precision": 0.8540145985401459,
+        "recall": 0.6464088397790055,
+        "f1": 0.7358490566037735,
+        "roc_auc": 0.8545718065832951,
+        "pr_auc": 0.7825036390865465,
+        "confusion_matrix": [
+          [
+            811,
+            20
+          ],
+          [
+            64,
+            117
+          ]
+        ]
+      }
+    }
+  },
+  "serialization_max_abs_error": 0.0,
+  "runtime": {
+    "python": "3.12.10",
+    "xgboost": "3.4.1",
+    "sklearn": "1.9.1",
+    "numpy": "2.5.4",
+    "pandas": "2.3.3"
+  },
+  "provenance_notice": "Dataset provenance, real-world representativeness and probability calibration are unverified. Candidate only; not promoted or deployed."
 }
